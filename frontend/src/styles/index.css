@@ -1,0 +1,321 @@
+/* ==========================================================================
+   BeautyCare — Sistema de diseño
+   Paleta cálida inspirada en un spa: rosa empolvado como acento principal,
+   marfil suave de fondo, serif elegante (Fraunces) para títulos y
+   Work Sans para el resto del contenido.
+   ========================================================================== */
+
+:root {
+  --color-bg: #faf5f0;
+  --color-surface: #ffffff;
+  --color-text: #35262a;
+  --color-text-soft: #7c6a67;
+  --color-border: #e8dcd3;
+
+  --color-primary: #a24a5c;
+  --color-primary-dark: #7f3a49;
+  --color-primary-soft: #f3e1e2;
+
+  --color-success: #4f7a5b;
+  --color-success-soft: #e4efe6;
+  --color-danger: #a8402f;
+  --color-danger-soft: #f6e4e0;
+  --color-warning: #b9832c;
+  --color-warning-soft: #f8ecd8;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --radius: 4px;
+  --shadow: 0 1px 3px rgba(53, 38, 42, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.15;
+  margin: 0 0 0.5em 0;
+  color: var(--color-text);
+}
+
+h1 { font-size: 2.4rem; font-weight: 600; }
+h2 { font-size: 1.65rem; }
+h3 { font-size: 1.2rem; }
+
+p { margin: 0 0 1em 0; color: var(--color-text-soft); max-width: 62ch; }
+
+a { color: var(--color-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+/* --- Layout general --- */
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+}
+
+.page {
+  flex: 1;
+  padding: 48px 0 80px;
+}
+
+/* --- Navbar --- */
+.navbar {
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.navbar-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: 0.2px;
+}
+
+.brand span { color: var(--color-primary); }
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.nav-links a {
+  color: var(--color-text-soft);
+  font-size: 0.95rem;
+}
+
+.nav-links a.active {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+/* --- Botones --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--color-primary-dark); }
+.btn-primary:disabled { background: #cbb3b8; cursor: not-allowed; }
+
+.btn-outline {
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+.btn-outline:hover { border-color: var(--color-primary); color: var(--color-primary); }
+
+.btn-danger {
+  background: transparent;
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+.btn-danger:hover { background: var(--color-danger-soft); }
+
+.btn-sm { padding: 6px 14px; font-size: 0.875rem; }
+
+/* --- Formularios --- */
+.field {
+  margin-bottom: 18px;
+}
+
+.field label {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--color-text-soft);
+  margin-bottom: 6px;
+}
+
+.field input, .field select, .field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+/* --- Listas planas (sin tarjetas idénticas) --- */
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.list-item:first-child { border-top: 1px solid var(--color-border); }
+
+.list-item-info h3 { margin-bottom: 4px; }
+.list-item-meta {
+  font-size: 0.875rem;
+  color: var(--color-text-soft);
+}
+
+/* --- Selección tipo "chip" para servicio/profesional/hora --- */
+.chip-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chip {
+  padding: 10px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.chip:hover { border-color: var(--color-primary); }
+
+.chip.selected {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+/* --- Indicador de pasos (wizard de reserva) --- */
+.steps {
+  display: flex;
+  gap: 0;
+  margin-bottom: 40px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.step {
+  padding: 0 0 14px 0;
+  margin-right: 32px;
+  font-size: 0.9rem;
+  color: var(--color-text-soft);
+  position: relative;
+}
+
+.step.active {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.step.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-primary);
+}
+
+.step.done { color: var(--color-text); }
+
+/* --- Etiquetas de estado --- */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+.badge-pendiente { background: var(--color-warning-soft); color: var(--color-warning); }
+.badge-confirmada { background: var(--color-success-soft); color: var(--color-success); }
+.badge-cancelada { background: var(--color-danger-soft); color: var(--color-danger); }
+.badge-completada { background: var(--color-primary-soft); color: var(--color-primary); }
+
+/* --- Mensajes --- */
+.alert {
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+.alert-error { background: var(--color-danger-soft); color: var(--color-danger); }
+.alert-success { background: var(--color-success-soft); color: var(--color-success); }
+
+.empty-state {
+  padding: 40px 0;
+  color: var(--color-text-soft);
+  text-align: left;
+}
+
+/* --- Utilidades --- */
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.mt-24 { margin-top: 24px; }
+.mt-40 { margin-top: 40px; }
+.text-soft { color: var(--color-text-soft); font-size: 0.875rem; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  text-align: left;
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.9rem;
+}
+th { color: var(--color-text-soft); font-weight: 500; font-size: 0.8rem; }
+
+@media (max-width: 640px) {
+  h1 { font-size: 1.9rem; }
+  .navbar-inner { flex-direction: column; gap: 12px; align-items: flex-start; }
+  .list-item { flex-direction: column; align-items: flex-start; }
+}
