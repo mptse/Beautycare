@@ -15,11 +15,11 @@ async function listarTodos(req, res) {
 // POST /api/servicios (solo admin)
 async function crear(req, res) {
   try {
-    const { nombre, descripcion, precio, duracionMinutos } = req.body;
+    const { nombre, descripcion, precio, duracionMinutos, imagenUrl } = req.body;
     if (!nombre || !precio || !duracionMinutos) {
       return res.status(400).json({ error: 'nombre, precio y duracionMinutos son obligatorios.' });
     }
-    const servicio = await Servicio.create({ nombre, descripcion, precio, duracionMinutos });
+    const servicio = await Servicio.create({ nombre, descripcion, precio, duracionMinutos, imagenUrl });
     res.status(201).json(servicio);
   } catch (error) {
     console.error(error);
@@ -33,8 +33,8 @@ async function actualizar(req, res) {
     const servicio = await Servicio.findByPk(req.params.id);
     if (!servicio) return res.status(404).json({ error: 'Servicio no encontrado.' });
 
-    const { nombre, descripcion, precio, duracionMinutos, activo } = req.body;
-    await servicio.update({ nombre, descripcion, precio, duracionMinutos, activo });
+    const { nombre, descripcion, precio, duracionMinutos, activo, imagenUrl } = req.body;
+    await servicio.update({ nombre, descripcion, precio, duracionMinutos, activo, imagenUrl });
     res.json(servicio);
   } catch (error) {
     console.error(error);

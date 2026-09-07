@@ -192,6 +192,114 @@ button, input, select, textarea {
   outline-offset: 1px;
 }
 
+/* --- Hero (portada) --- */
+.hero {
+  background: linear-gradient(180deg, var(--color-primary-soft) 0%, var(--color-bg) 100%);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hero-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 72px 24px 56px;
+}
+
+.hero-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 0.75rem;
+  color: var(--color-primary);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  max-width: 14ch;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  max-width: 50ch;
+}
+
+/* --- Grid de tarjetas de servicio --- */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 28px;
+}
+
+.service-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.service-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(53, 38, 42, 0.12);
+  border-color: var(--color-primary);
+}
+
+.service-card-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--color-primary-soft);
+  display: block;
+}
+
+.service-card-body {
+  padding: 18px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.service-card-body p {
+  font-size: 0.9rem;
+  margin: 0;
+  flex: 1;
+}
+
+.service-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.service-price {
+  font-family: var(--font-display);
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+/* --- Miniatura pequeña (usada en admin y resumen de reserva) --- */
+.thumb-sm {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: var(--color-primary-soft);
+  flex-shrink: 0;
+}
+
+/* --- Footer --- */
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  padding: 28px 0;
+  text-align: center;
+  color: var(--color-text-soft);
+  font-size: 0.85rem;
+}
+
 /* --- Listas planas (sin tarjetas idénticas) --- */
 .list-item {
   display: flex;
@@ -316,6 +424,8 @@ th { color: var(--color-text-soft); font-weight: 500; font-size: 0.8rem; }
 
 @media (max-width: 640px) {
   h1 { font-size: 1.9rem; }
+  .hero h1 { font-size: 2.1rem; }
+  .hero-inner { padding: 48px 24px 40px; }
   .navbar-inner { flex-direction: column; gap: 12px; align-items: flex-start; }
   .list-item { flex-direction: column; align-items: flex-start; }
 }

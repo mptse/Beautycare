@@ -215,11 +215,16 @@ export default function Reservar() {
         {/* Paso 4: Datos del cliente */}
         {pasoActual === 3 && (
           <form onSubmit={confirmarReserva}>
-            <h3>Resumen de tu cita</h3>
-            <p>
-              {servicioSeleccionado?.nombre} con {profesionalSeleccionado?.nombre}<br />
-              {formatoFechaLegible(fecha)} a las {hora} · {formatoPrecio(servicioSeleccionado?.precio || 0)}
-            </p>
+                       <h3>Resumen de tu cita</h3>
+            <div style={{ display: 'flex', gap: 14, alignItems: 'center', marginBottom: 18 }}>
+              {servicioSeleccionado?.imagenUrl && (
+                <img className="thumb-sm" src={servicioSeleccionado.imagenUrl} alt={servicioSeleccionado.nombre} />
+              )}
+              <p style={{ margin: 0 }}>
+                {servicioSeleccionado?.nombre} con {profesionalSeleccionado?.nombre}<br />
+                {formatoFechaLegible(fecha)} a las {hora} · {formatoPrecio(servicioSeleccionado?.precio || 0)}
+              </p>
+            </div>
 
             <div className="field">
               <label>Nombre completo</label>
@@ -230,7 +235,7 @@ export default function Reservar() {
               <input value={telefono} onChange={(e) => setTelefono(e.target.value)} required />
             </div>
             <div className="field">
-              <label>Correo (opcional)</label>
+              <label>Correo </label>
               <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
 

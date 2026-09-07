@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import api from '../../api/client';
 
-const VACIO = { nombre: '', descripcion: '', precio: '', duracionMinutos: '' };
+const VACIO = { nombre: '', descripcion: '', precio: '', duracionMinutos: '', imagenUrl: '' };
 
 export default function Servicios() {
   const [servicios, setServicios] = useState([]);
@@ -21,6 +21,7 @@ export default function Servicios() {
       descripcion: servicio.descripcion || '',
       precio: servicio.precio,
       duracionMinutos: servicio.duracionMinutos,
+      imagenUrl: servicio.imagenUrl || '',
     });
   }
 
@@ -81,15 +82,22 @@ export default function Servicios() {
             <label>Duración (min)</label>
             <input type="number" value={form.duracionMinutos} onChange={(e) => setForm({ ...form, duracionMinutos: e.target.value })} required />
           </div>
+          <div className="field" style={{ marginBottom: 0, flex: '2 1 260px' }}>
+            <label>URL de la imagen</label>
+            <input value={form.imagenUrl} onChange={(e) => setForm({ ...form, imagenUrl: e.target.value })} placeholder="https://…" />
+          </div>
           <button className="btn btn-primary">{editandoId ? 'Guardar cambios' : 'Agregar servicio'}</button>
           {editandoId && <button type="button" className="btn btn-outline" onClick={cancelarEdicion}>Cancelar</button>}
         </form>
 
         {servicios.map((s) => (
           <div className="list-item" key={s.id}>
-            <div className="list-item-info">
-              <h3>{s.nombre} {!s.activo && <span className="badge badge-cancelada">inactivo</span>}</h3>
-              <div className="list-item-meta">${s.precio} · {s.duracionMinutos} min</div>
+            <div className="list-item-info" style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
+              {s.imagenUrl && <img className="thumb-sm" src={s.imagenUrl} alt={s.nombre} />}
+              <div>
+                <h3>{s.nombre} {!s.activo && <span className="badge badge-cancelada">inactivo</span>}</h3>
+                <div className="list-item-meta">${s.precio} · {s.duracionMinutos} min</div>
+              </div>
             </div>
             <div style={{ display: 'flex', gap: 8 }}>
               <button className="btn btn-outline btn-sm" onClick={() => alternarActivo(s)}>

@@ -24,10 +24,10 @@ async function seed() {
 
   // --- Servicios de ejemplo ---
   const servicios = await Servicio.bulkCreate([
-    { nombre: 'Manicura clásica', descripcion: 'Limado, cutícula y esmaltado tradicional', precio: 25000, duracionMinutos: 45 },
-    { nombre: 'Manicura semipermanente', descripcion: 'Esmaltado de larga duración con secado UV', precio: 40000, duracionMinutos: 60 },
-    { nombre: 'Limpieza facial profunda', descripcion: 'Limpieza, exfoliación e hidratación', precio: 60000, duracionMinutos: 75 },
-    { nombre: 'Tratamiento antiedad', descripcion: 'Tratamiento facial con masaje y serum', precio: 90000, duracionMinutos: 90 },
+    { nombre: 'Manicura clásica', descripcion: 'Limado, cutícula y esmaltado tradicional', precio: 25000, duracionMinutos: 45, imagenUrl: 'https://picsum.photos/seed/manicura-clasica/600/450' },
+    { nombre: 'Manicura semipermanente', descripcion: 'Esmaltado de larga duración con secado UV', precio: 40000, duracionMinutos: 60, imagenUrl: 'https://picsum.photos/seed/manicura-semi/600/450' },
+    { nombre: 'Limpieza facial profunda', descripcion: 'Limpieza, exfoliación e hidratación', precio: 60000, duracionMinutos: 75, imagenUrl: 'https://picsum.photos/seed/facial-limpieza/600/450' },
+    { nombre: 'Tratamiento antiedad', descripcion: 'Tratamiento facial con masaje y serum', precio: 90000, duracionMinutos: 90, imagenUrl: 'https://picsum.photos/seed/facial-antiedad/600/450' },
   ]);
   console.log(`${servicios.length} servicios creados.`);
 

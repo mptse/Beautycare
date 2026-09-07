@@ -22,6 +22,10 @@ const Servicio = sequelize.define('Servicio', {
     type: DataTypes.BOOLEAN,
     defaultValue: true,
   },
+  imagenUrl: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 });
 
 module.exports = Servicio;
