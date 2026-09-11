@@ -1,7 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 const { sequelize } = require('./models');
+const { limiteGeneral } = require('./middleware/rateLimiter');
 
 const authRoutes = require('./routes/authRoutes');
 const servicioRoutes = require('./routes/servicioRoutes');
@@ -11,8 +13,16 @@ const citaRoutes = require('./routes/citaRoutes');
 
 const app = express();
 
-app.use(cors());
+// Cabeceras de seguridad HTTP estándar (protege contra varios ataques comunes del navegador)
+app.use(helmet());
+
+// Solo el frontend autorizado puede llamar esta API (evita que cualquier otro sitio la use)
+app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:5173' }));
+
 app.use(express.json());
+
+// Límite general de peticiones por IP, como red de seguridad amplia
+app.use('/api', limiteGeneral);
 
 // Ruta de prueba para confirmar que el servidor está vivo
 app.get('/', (req, res) => {
