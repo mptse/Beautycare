@@ -11,6 +11,8 @@ export default function Profesionales() {
   const [expandidoId, setExpandidoId] = useState(null);
   const [horarios, setHorarios] = useState([]);
   const [nuevoHorario, setNuevoHorario] = useState({ diaSemana: '1', horaInicio: '08:00', horaFin: '17:00' });
+  const [editandoHorarioId, setEditandoHorarioId] = useState(null);
+  const [horarioEditado, setHorarioEditado] = useState({ diaSemana: '1', horaInicio: '08:00', horaFin: '17:00' });
   const [error, setError] = useState('');
 
   function cargar() {
@@ -72,6 +74,22 @@ export default function Profesionales() {
     setHorarios(data);
   }
 
+  function empezarEdicionHorario(h) {
+    setEditandoHorarioId(h.id);
+    setHorarioEditado({ diaSemana: String(h.diaSemana), horaInicio: h.horaInicio, horaFin: h.horaFin });
+  }
+
+  function cancelarEdicionHorario() {
+    setEditandoHorarioId(null);
+  }
+
+  async function guardarHorarioEditado(horarioId, profesionalId) {
+    await api.put(`/horarios/${horarioId}`, horarioEditado);
+    const { data } = await api.get(`/profesionales/${profesionalId}/horarios`);
+    setHorarios(data);
+    setEditandoHorarioId(null);
+  }
+
   return (
     <div className="page">
       <div className="container">
@@ -113,10 +131,34 @@ export default function Profesionales() {
               <div style={{ background: 'var(--color-surface)', padding: '16px 0 24px' }}>
                 {horarios.length === 0 && <p className="text-soft">Sin horarios definidos todavía.</p>}
                 {horarios.map((h) => (
-                  <div key={h.id} className="flex-between" style={{ padding: '6px 0', maxWidth: 420 }}>
-                    <span>{DIAS[h.diaSemana]}: {h.horaInicio} – {h.horaFin}</span>
-                    <button className="btn btn-outline btn-sm" onClick={() => eliminarHorario(h.id, p.id)}>Quitar</button>
-                  </div>
+                  editandoHorarioId === h.id ? (
+                    <div key={h.id} style={{ display: 'flex', gap: 8, alignItems: 'flex-end', padding: '8px 0', flexWrap: 'wrap' }}>
+                      <div className="field" style={{ marginBottom: 0 }}>
+                        <label>Día</label>
+                        <select value={horarioEditado.diaSemana} onChange={(e) => setHorarioEditado({ ...horarioEditado, diaSemana: e.target.value })}>
+                          {DIAS.map((d, i) => <option key={i} value={i}>{d}</option>)}
+                        </select>
+                      </div>
+                      <div className="field" style={{ marginBottom: 0 }}>
+                        <label>Desde</label>
+                        <input type="time" value={horarioEditado.horaInicio} onChange={(e) => setHorarioEditado({ ...horarioEditado, horaInicio: e.target.value })} />
+                      </div>
+                      <div className="field" style={{ marginBottom: 0 }}>
+                        <label>Hasta</label>
+                        <input type="time" value={horarioEditado.horaFin} onChange={(e) => setHorarioEditado({ ...horarioEditado, horaFin: e.target.value })} />
+                      </div>
+                      <button className="btn btn-primary btn-sm" onClick={() => guardarHorarioEditado(h.id, p.id)}>Guardar</button>
+                      <button className="btn btn-outline btn-sm" onClick={cancelarEdicionHorario}>Cancelar</button>
+                    </div>
+                  ) : (
+                    <div key={h.id} className="flex-between" style={{ padding: '6px 0', maxWidth: 480 }}>
+                      <span>{DIAS[h.diaSemana]}: {h.horaInicio} – {h.horaFin}</span>
+                      <div style={{ display: 'flex', gap: 8 }}>
+                        <button className="btn btn-outline btn-sm" onClick={() => empezarEdicionHorario(h)}>Editar</button>
+                        <button className="btn btn-outline btn-sm" onClick={() => eliminarHorario(h.id, p.id)}>Quitar</button>
+                      </div>
+                    </div>
+                  )
                 ))}
 
                 <div style={{ display: 'flex', gap: 8, alignItems: 'flex-end', marginTop: 16, flexWrap: 'wrap' }}>

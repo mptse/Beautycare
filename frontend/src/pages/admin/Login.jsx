@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 export default function Login() {
@@ -25,26 +25,34 @@ export default function Login() {
   }
 
   return (
-    <div className="page">
-      <div className="container" style={{ maxWidth: 400 }}>
-        <h1>Acceso administrador</h1>
-        <p>Gestiona servicios, profesionales, horarios y citas de BeautyCare.</p>
+    <div className="auth-page">
+      <div style={{ width: '100%', maxWidth: 380 }}>
+        <Link to="/" className="auth-back">← Volver al sitio</Link>
 
-        {error && <div className="alert alert-error">{error}</div>}
+        <div className="auth-card">
+          <h1>Acceso administrador</h1>
+          <p>Gestiona servicios, profesionales, horarios y citas de BeautyCare.</p>
 
-        <form onSubmit={handleSubmit}>
-          <div className="field">
-            <label>Correo</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-          </div>
-          <div className="field">
-            <label>Contraseña</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-          </div>
-          <button className="btn btn-primary" disabled={cargando}>
-            {cargando ? 'Ingresando…' : 'Ingresar'}
-          </button>
-        </form>
+          {error && <div className="alert alert-error">{error}</div>}
+
+          <form onSubmit={handleSubmit}>
+            <div className="field">
+              <label>Correo</label>
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoFocus />
+            </div>
+            <div className="field">
+              <label>Contraseña</label>
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            </div>
+            <button className="btn btn-primary" disabled={cargando}>
+              {cargando ? 'Ingresando…' : 'Ingresar'}
+            </button>
+          </form>
+        </div>
+
+        <p className="text-soft" style={{ textAlign: 'center', marginTop: 20 }}>
+          ¿Eres cliente? <Link to="/reservar">Reserva tu cita aquí</Link>
+        </p>
       </div>
     </div>
   );
