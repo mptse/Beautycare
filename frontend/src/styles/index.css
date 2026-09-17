@@ -451,6 +451,17 @@ button, input, select, textarea {
   text-transform: capitalize;
 }
 
+/* --- Impresión de reportes --- */
+.print-only { display: none; }
+
+@media print {
+  .navbar, .no-print, .site-footer { display: none !important; }
+  .print-only { display: block; }
+  .page { padding: 0; }
+  body { background: #fff; }
+  .report-summary-item, table { break-inside: avoid; }
+}
+
 /* --- Filtros del admin --- */
 .filters-bar {
   display: flex;

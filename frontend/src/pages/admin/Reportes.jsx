@@ -41,12 +41,49 @@ export default function Reportes() {
       .finally(() => setCargandoDesglose(false));
   }
 
+  function descargarCSV() {
+    if (!reporte) return;
+
+    const filas = [
+      ['Reporte de ingresos BeautyCare', anio],
+      [],
+      ['Mes', 'Ingresos (COP)', 'Citas completadas'],
+      ...reporte.meses.map((m) => [m.nombre, m.totalIngresos, m.cantidadCitas]),
+      [],
+      ['Total del año', reporte.totalAnual, reporte.totalCitas],
+    ];
+
+    // Si hay un mes con detalle cargado, lo agregamos también al final del archivo
+    if (desglose) {
+      filas.push([], [`Detalle de ${desglose.nombreMes} ${anio}`]);
+      filas.push([], ['Por servicio']);
+      filas.push(['Servicio', 'Cantidad', 'Total (COP)']);
+      desglose.porServicio.forEach((s) => filas.push([s.nombre, s.cantidad, s.total]));
+      filas.push([], ['Por profesional']);
+      filas.push(['Profesional', 'Cantidad', 'Total (COP)']);
+      desglose.porProfesional.forEach((p) => filas.push([p.nombre, p.cantidad, p.total]));
+    }
+
+    const csv = filas.map((fila) => fila.join(';')).join('\n');
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' }); // \uFEFF para que Excel lea bien las tildes
+    const url = URL.createObjectURL(blob);
+    const enlace = document.createElement('a');
+    enlace.href = url;
+    enlace.download = `beautycare-ingresos-${anio}.csv`;
+    enlace.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function imprimirReporte() {
+    window.print();
+  }
+
   const maxIngreso = reporte ? Math.max(...reporte.meses.map((m) => m.totalIngresos), 1) : 1;
 
   return (
     <div className="page">
       <div className="container">
-        <div className="flex-between" style={{ alignItems: 'flex-start' }}>
+        <div className="flex-between report-header no-print" style={{ alignItems: 'flex-start' }}>
           <div>
             <h1>Reportes de ingresos</h1>
             <p>Basado en las citas marcadas como <strong>completada</strong> — así el reporte refleja dinero realmente ganado.</p>
@@ -59,11 +96,18 @@ export default function Reportes() {
           </div>
         </div>
 
-        {error && <div className="alert alert-error">{error}</div>}
-        {cargando && <p className="text-soft">Calculando…</p>}
+        <h1 className="print-only">Reporte de ingresos BeautyCare — {anio}</h1>
+
+        {error && <div className="alert alert-error no-print">{error}</div>}
+        {cargando && <p className="text-soft no-print">Calculando…</p>}
 
         {!cargando && reporte && (
           <>
+            <div className="no-print" style={{ display: 'flex', gap: 10, marginBottom: 8 }}>
+              <button className="btn btn-outline btn-sm" onClick={descargarCSV}>⬇ Descargar CSV</button>
+              <button className="btn btn-outline btn-sm" onClick={imprimirReporte}>🖨 Imprimir / Guardar PDF</button>
+            </div>
+
             <div className="report-summary mt-24">
               <div className="report-summary-item">
                 <div className="report-summary-value">{formatoPrecio(reporte.totalAnual)}</div>
@@ -81,10 +125,10 @@ export default function Reportes() {
               </div>
             </div>
 
-            <h3 className="mt-40">Ingresos por mes</h3>
-            <p className="text-soft" style={{ marginTop: -6 }}>Haz clic en un mes para ver el detalle por servicio y por profesional.</p>
+            <h3 className="mt-40 no-print">Ingresos por mes</h3>
+            <p className="text-soft no-print" style={{ marginTop: -6 }}>Haz clic en un mes para ver el detalle por servicio y por profesional.</p>
 
-            <div className="revenue-chart">
+            <div className="revenue-chart no-print">
               {reporte.meses.map((m) => (
                 <button
                   key={m.mes}
@@ -104,9 +148,30 @@ export default function Reportes() {
               ))}
             </div>
 
+            {/* Tabla equivalente, solo visible al imprimir (los gráficos de barras no imprimen bien) */}
+            <table className="print-only mt-24">
+              <thead>
+                <tr><th>Mes</th><th>Ingresos</th><th>Citas</th></tr>
+              </thead>
+              <tbody>
+                {reporte.meses.map((m) => (
+                  <tr key={m.mes}>
+                    <td>{m.nombre}</td>
+                    <td>{formatoPrecio(m.totalIngresos)}</td>
+                    <td>{m.cantidadCitas}</td>
+                  </tr>
+                ))}
+                <tr>
+                  <td><strong>Total</strong></td>
+                  <td><strong>{formatoPrecio(reporte.totalAnual)}</strong></td>
+                  <td><strong>{reporte.totalCitas}</strong></td>
+                </tr>
+              </tbody>
+            </table>
+
             {mesSeleccionado && (
               <div className="mt-40">
-                {cargandoDesglose && <p className="text-soft">Cargando detalle…</p>}
+                {cargandoDesglose && <p className="text-soft no-print">Cargando detalle…</p>}
                 {!cargandoDesglose && desglose && (
                   <>
                     <h3>Detalle de {desglose.nombreMes}</h3>
