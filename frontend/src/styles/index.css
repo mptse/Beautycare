@@ -370,6 +370,87 @@ button, input, select, textarea {
   font-size: 0.85rem;
 }
 
+/* --- Reportes de ingresos --- */
+.report-summary {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.report-summary-item {
+  flex: 1;
+  min-width: 160px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 20px 22px;
+}
+
+.report-summary-value {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  color: var(--color-primary-dark);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.revenue-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 210px;
+  padding: 16px 8px 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+.revenue-bar-col {
+  flex: 1;
+  min-width: 42px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  height: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 2px 10px;
+  border-radius: 6px;
+}
+
+.revenue-bar-col:hover, .revenue-bar-col.selected {
+  background: var(--color-primary-soft);
+}
+
+.revenue-bar-value {
+  font-size: 0.68rem;
+  color: var(--color-text-soft);
+  white-space: nowrap;
+}
+
+.revenue-bar {
+  width: 60%;
+  min-width: 14px;
+  background: var(--color-primary);
+  border-radius: 4px 4px 0 0;
+  transition: height 0.2s ease;
+}
+
+.revenue-bar-col.selected .revenue-bar,
+.revenue-bar-col:hover .revenue-bar {
+  background: var(--color-primary-dark);
+}
+
+.revenue-bar-label {
+  font-size: 0.75rem;
+  color: var(--color-text-soft);
+  text-transform: capitalize;
+}
+
 /* --- Filtros del admin --- */
 .filters-bar {
   display: flex;

@@ -11,6 +11,7 @@ import Login from './pages/admin/Login';
 import Citas from './pages/admin/Citas';
 import Servicios from './pages/admin/Servicios';
 import Profesionales from './pages/admin/Profesionales';
+import Reportes from './pages/admin/Reportes';
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
             <Route path="/admin" element={<ProtectedRoute><Citas /></ProtectedRoute>} />
             <Route path="/admin/servicios" element={<ProtectedRoute><Servicios /></ProtectedRoute>} />
             <Route path="/admin/profesionales" element={<ProtectedRoute><Profesionales /></ProtectedRoute>} />
+                        <Route path="/admin/reportes" element={<ProtectedRoute><Reportes /></ProtectedRoute>} />
           </Routes>
         </div>
       </AuthProvider>

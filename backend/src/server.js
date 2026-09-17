@@ -10,6 +10,7 @@ const servicioRoutes = require('./routes/servicioRoutes');
 const profesionalRoutes = require('./routes/profesionalRoutes');
 const horarioRoutes = require('./routes/horarioRoutes');
 const citaRoutes = require('./routes/citaRoutes');
+const reporteRoutes = require('./routes/reporteRoutes');
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use('/api/servicios', servicioRoutes);
 app.use('/api/profesionales', profesionalRoutes);
 app.use('/api/horarios', horarioRoutes);
 app.use('/api/citas', citaRoutes);
+app.use('/api/reportes', reporteRoutes);
 
 // Manejo de rutas no encontradas
 app.use((req, res) => {

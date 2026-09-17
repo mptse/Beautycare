@@ -55,6 +55,7 @@ export default function Navbar() {
             <Link to="/admin" className={isActive('/admin')} onClick={cerrarMenu}>Citas</Link>
             <Link to="/admin/servicios" className={isActive('/admin/servicios')} onClick={cerrarMenu}>Servicios</Link>
             <Link to="/admin/profesionales" className={isActive('/admin/profesionales')} onClick={cerrarMenu}>Profesionales</Link>
+                        <Link to="/admin/reportes" className={isActive('/admin/reportes')} onClick={cerrarMenu}>Reportes</Link>
             <button className="btn btn-outline btn-sm" onClick={handleLogout}>Cerrar sesión</button>
           </nav>
         )}
