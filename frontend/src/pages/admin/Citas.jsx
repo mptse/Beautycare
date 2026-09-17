@@ -49,7 +49,7 @@ export default function Citas() {
 
         {error && <div className="alert alert-error">{error}</div>}
 
-        <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 24 }}>
+        <div className="filters-bar">
           <div className="field" style={{ marginBottom: 0 }}>
             <label>Fecha</label>
             <input type="date" value={filtroFecha} onChange={(e) => setFiltroFecha(e.target.value)} />
@@ -74,41 +74,44 @@ export default function Citas() {
         {!cargando && citas.length === 0 && <div className="empty-state">No hay citas con esos filtros.</div>}
 
         {!cargando && citas.length > 0 && (
-          <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Cliente</th>
-                <th>Servicio</th>
-                <th>Profesional</th>
-                <th>Estado</th>
-              </tr>
-            </thead>
-            <tbody>
-              {citas.map((c) => (
-                <tr key={c.id}>
-                  <td>#{c.id}</td>
-                  <td>{c.fecha}</td>
-                  <td>{c.hora}</td>
-                  <td>{c.Cliente?.nombre}<br /><span className="text-soft">{c.Cliente?.telefono}</span></td>
-                  <td>{c.Servicio?.nombre}</td>
-                  <td>{c.Profesional?.nombre}</td>
-                  <td>
-                    <select
-                      value={c.estado}
-                      onChange={(e) => cambiarEstado(c.id, e.target.value)}
-                      className={`badge badge-${c.estado}`}
-                      style={{ border: 'none', cursor: 'pointer' }}
-                    >
-                      {ESTADOS.map((e) => <option key={e} value={e}>{e}</option>)}
-                    </select>
-                  </td>
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Fecha</th>
+                  <th>Hora</th>
+                  <th>Cliente</th>
+                  <th>Servicio</th>
+                  <th>Profesional</th>
+                  <th>Estado</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {citas.map((c) => (
+                  <tr key={c.id}>
+                    <td data-label="#">#{c.id}</td>
+                    <td data-label="Fecha">{c.fecha}</td>
+                    <td data-label="Hora">{c.hora}</td>
+                    <td data-label="Cliente">
+                      <span style={{ textAlign: 'right' }}>{c.Cliente?.nombre}<br /><span className="text-soft">{c.Cliente?.telefono}</span></span>
+                    </td>
+                    <td data-label="Servicio">{c.Servicio?.nombre}</td>
+                    <td data-label="Profesional">{c.Profesional?.nombre}</td>
+                    <td data-label="Estado">
+                      <select
+                        value={c.estado}
+                        onChange={(e) => cambiarEstado(c.id, e.target.value)}
+                        className={`status-select badge-${c.estado}`}
+                      >
+                        {ESTADOS.map((e) => <option key={e} value={e}>{e}</option>)}
+                      </select>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>

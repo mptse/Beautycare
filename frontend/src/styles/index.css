@@ -123,11 +123,48 @@ button, input, select, textarea {
   color: var(--color-text-soft);
   font-size: 0.95rem;
 }
-
 .nav-links a.active {
   color: var(--color-primary);
   font-weight: 500;
 }
+
+.navbar-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--color-text);
+  padding: 4px 8px;
+}
+
+@media (max-width: 720px) {
+  .navbar-toggle { display: block; }
+
+  .navbar-inner { flex-wrap: wrap; }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    width: 100%;
+    padding-top: 12px;
+    margin-top: 12px;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .nav-links.open { display: flex; }
+
+  .nav-links a, .nav-links button {
+    width: 100%;
+    padding: 10px 4px;
+  }
+
+  .nav-links button.btn { width: auto; margin-top: 6px; }
+}
+
 
 /* --- Botones --- */
 .btn {
@@ -333,6 +370,74 @@ button, input, select, textarea {
   font-size: 0.85rem;
 }
 
+/* --- Filtros del admin --- */
+.filters-bar {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-bottom: 28px;
+}
+
+/* --- Selector de estado con apariencia de badge --- */
+.status-select {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 5px 28px 5px 12px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 11px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2335262a' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+}
+.status-select.badge-pendiente { background-color: var(--color-warning-soft); color: var(--color-warning); }
+.status-select.badge-confirmada { background-color: var(--color-success-soft); color: var(--color-success); }
+.status-select.badge-cancelada { background-color: var(--color-danger-soft); color: var(--color-danger); }
+.status-select.badge-completada { background-color: var(--color-primary-soft); color: var(--color-primary); }
+
+/* --- Tabla responsiva (se convierte en tarjetas apiladas en celular) --- */
+.table-wrap {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.table-wrap table { margin: 0; }
+.table-wrap th, .table-wrap td { padding: 14px 16px; }
+.table-wrap thead th { background: var(--color-bg); }
+.table-wrap tbody tr:last-child td { border-bottom: none; }
+.table-wrap tbody tr:hover { background: var(--color-primary-soft); }
+
+@media (max-width: 720px) {
+  .table-wrap thead { display: none; }
+  .table-wrap table, .table-wrap tbody, .table-wrap tr, .table-wrap td { display: block; width: 100%; }
+  .table-wrap tr {
+    border-bottom: 1px solid var(--color-border);
+    padding: 14px 16px;
+  }
+  .table-wrap td {
+    border-bottom: none;
+    padding: 4px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .table-wrap td::before {
+    content: attr(data-label);
+    font-size: 0.75rem;
+    color: var(--color-text-soft);
+    font-weight: 500;
+  }
+}
+
 /* --- Listas planas (sin tarjetas idénticas) --- */
 .list-item {
   display: flex;
@@ -459,6 +564,5 @@ th { color: var(--color-text-soft); font-weight: 500; font-size: 0.8rem; }
   h1 { font-size: 1.9rem; }
   .hero h1 { font-size: 2.1rem; }
   .hero-inner { padding: 48px 24px 40px; }
-  .navbar-inner { flex-direction: column; gap: 12px; align-items: flex-start; }
   .list-item { flex-direction: column; align-items: flex-start; }
 }
